@@ -107,7 +107,7 @@
             Last Name: <input class ="form-control" type="text" name="last"><br>
             City: <input class ="form-control" type="text" name="city"><br>
             Address: <input class ="form-control" type="text" name="address"><br>
-            Country Name:<select class="form-control" name="country_name">
+            Country Name:<select class="form-control" name="country">
                 <option>Egypt</option>
                 <option>England</option>
                 <option>US</option>
@@ -116,11 +116,6 @@
             </select><br>
             Email: <input class ="form-control" type="text" name="email"><br>
             <input type="submit" value="Update">
-        </form>
-        <form action="/delete_person" method="POST">
-            <h3 class="text-center">Delete Person</h3>
-            Person ID: <input class ="form-control" type="text" name="idperson"><br>
-            <input type="submit" value="Delete">
         </form>
         <form action="/count_persons_by_country" method="POST">
             <h3 class="text-center">Count Persons by Country</h3>

@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 # Establish database connection
 connection = connect_to_db()
-cursor = connection.cursor()
+cursor = connection.cursor(buffered=True)
 
 
 def insert_person(first, last, city, address, country, email):
@@ -40,9 +40,9 @@ def insert_projects(first_p, second_p, third_p, person_id):
 
 
 
-def read_person_query(idperson):
+def read_person_query(first_name):
     select_person = "SELECT * FROM person WHERE fName = %s"
-    cursor.execute(select_person, (idperson,))
+    cursor.execute(select_person, (first_name,))
     return cursor.fetchone()
 
 def update_person_query(idperson, first, last, city, address, country, email):
@@ -50,10 +50,7 @@ def update_person_query(idperson, first, last, city, address, country, email):
     cursor.execute(update_person, (first, last, city, address, country, email, idperson))
     connection.commit()
 
-def delete_person_query(idperson):
-    delete_person = "DELETE FROM person WHERE idperson = %s"
-    cursor.execute(delete_person, (idperson,))
-    connection.commit()
+
 
 def select_all_query(table_name):
     fetch_query = f"SELECT * FROM {table_name}"
@@ -126,15 +123,10 @@ def update_person():
     email = request.form['email']
     # Call  update_person function 
     update_person_query(idperson, first, last, city, address, country, email)
-    updatedPerson = read_person_query(idperson)
+    updatedPerson = read_person_query(first)
     return render_template('person.html', person=updatedPerson,title = "UPDATED")
 
-@app.route('/delete_person', methods=['POST'])
-def delete_person():
-    idperson = request.form['idperson']
-    # Call  delete_person function
-    delete_person_query(idperson)
-    return "Person deleted successfully!"
+
 
 # Flask Code for Aggregation functions
 @app.route('/count_persons_by_country', methods=['POST'])

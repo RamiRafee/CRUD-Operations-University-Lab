@@ -24,13 +24,6 @@ To insert a new person into the database, follow these steps:
 2. Enter the person's details (e.g., first name, last name, etc.).
 3. Click the "Submit" button to insert the person into the database.
 
-### Deleting a Person
-
-To delete a person from the database, follow these steps:
-
-1. Navigate to the delete person form in the web application.
-2. Enter the person's ID or other unique identifier.
-3. Click the "Delete" button to remove the person from the database.
 
 ### Updating a Person
 
