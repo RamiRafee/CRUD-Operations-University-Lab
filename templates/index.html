@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My CV Project</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<style>
+    form{
+        margin: 20px;
+        padding: 20px;
+        border: 5px solid black;
+    }
+</style>
+<body>
+    <div class="container">
+        <h1 class="text-center mt-5">My CV Project</h1>
+        <form name="myForm" action="/" method="POST" class="mt-5">
+            <h3 class="text-center">Insert Person</h3>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td>First Name:</td>
+                        <td><input class="form-control" type="text" name="first" value="" size="50" /></td>
+                    </tr>
+                    <tr>
+                        <td>Last Name:</td>
+                        <td><input class="form-control" type="text" name="last" value="" size="50" /></td>
+                    </tr>
+                    <tr>
+                        <td>Address:</td>
+                        <td><input class="form-control" type="text" name="address" value="" size="50" /></td>
+                    </tr>
+                    <tr>
+                        <td>Country:</td>
+                        <td>
+                            <select class="form-control" name="country">
+                                <option>Egypt</option>
+                                <option>England</option>
+                                <option>US</option>
+                                <option>Spain</option>
+                                <option>Italy</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>City:</td>
+                        <td><input class="form-control" type="text" name="city" value="" size="50" /></td>
+                    </tr>
+                    <tr>
+                        <td>Email:</td>
+                        <td><input class="form-control" type="text" name="email" value="" size="50" /></td>
+                    </tr>
+                    <tr>
+                        <td>Latest 3 projects:</td>
+                        <td>
+                            <input class="form-control" type="text" name="firstP" value="" size="50" />
+                            <input class="form-control" type="text" name="secondP" value="" size="50" />
+                            <input class="form-control" type="text" name="thirdP" value="" size="50" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Latest 3 courses:</td>
+                        <td>
+                            <input class="form-control" type="text" name="firstC" value="" size="50" />
+                            <input class="form-control" type="text" name="secondC" value="" size="50" />
+                            <input class="form-control" type="text" name="thirdC" value="" size="50" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Languages:</td>
+                        <td><input class ="form-control" type="text" name="firstL" value="" size="50"/>
+                        <input class ="form-control" type="text" name="secondL" value="" size="50"/>
+                        <input class ="form-control" type="text" name="yhirdL" value="" size="50"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Hobbies:</td>
+                        <td><input class ="form-control" type="text" name="firstH" value="" size="50"/>
+                        <input class ="form-control" type="text" name="secondH" value="" size="50"/>
+                        <input class ="form-control" type="text" name="thirdH" value="" size="50"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Training:</td>
+                        <td><input class ="form-control" type="text" name="firstT" value="" size="50"/>
+                        <input class ="form-control" type="text" name="secondT" value="" size="50"/>
+                        <input class ="form-control" type="text" name="thirdT" value="" size="50"/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <input type="submit" class="btn btn-primary" value="Submit" name="submit" />
+            <input type="hidden" name="hidden" value="<%= result %>" size="50" />
+        </form>
+        <form action="/read_person" method="POST">
+            <h3 class="text-center">Fetch a specified person</h3>
+            First Name: <input class ="form-control" type="text" name="first_name"><br>
+            <input  type="submit" value="Read">
+        </form>
+        <form action="/update_person" method="POST">
+            <h3 class="text-center">Update a specific Person</h3>
+            Person ID: <input class ="form-control"  type="text" name="idperson"><br>
+            First Name: <input class ="form-control" type="text" name="first"><br>
+            Last Name: <input class ="form-control" type="text" name="last"><br>
+            City: <input class ="form-control" type="text" name="city"><br>
+            Address: <input class ="form-control" type="text" name="address"><br>
+            Country Name:<select class="form-control" name="country_name">
+                <option>Egypt</option>
+                <option>England</option>
+                <option>US</option>
+                <option>Spain</option>
+                <option>Italy</option>
+            </select><br>
+            Email: <input class ="form-control" type="text" name="email"><br>
+            <input type="submit" value="Update">
+        </form>
+        <form action="/delete_person" method="POST">
+            <h3 class="text-center">Delete Person</h3>
+            Person ID: <input class ="form-control" type="text" name="idperson"><br>
+            <input type="submit" value="Delete">
+        </form>
+        <form action="/count_persons_by_country" method="POST">
+            <h3 class="text-center">Count Persons by Country</h3>
+            Country Name:<select class="form-control" name="country_name">
+                <option>Egypt</option>
+                <option>England</option>
+                <option>US</option>
+                <option>Spain</option>
+                <option>Italy</option>
+            </select>
+            <br>
+            <input type="submit" value="Count Persons By Country">
+        </form>
+        <form action="/sum_id_column" method="POST">
+            <h3 class="text-center">(Count SUM of ID column) :D</h3>
+            Table Name: <input class ="form-control" type="text" name="table_name"><br>
+            <input type="submit" value="Calculate Sum">
+        </form>
+        <form action="/count_rows" method="POST">
+            <h3 class="text-center">Count Rows for A TABLE</h3>
+            Table Name: <input class ="form-control" type="text" name="table_name"><br>
+            <input type="submit" value="Count Rows">
+        </form>
+        <form method="POST" action="/fetch_table_data">
+            <h3 class="text-center">Select all from a table</h3>
+            <div class="form-group">
+                <label for="table_name">Enter Table Name:</label>
+                <input placeholder="Tables:app-course-hobby-language-person-project-site" type="text" class="form-control" id="table_name" name="table_name" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Fetch Data</button>
+        </form>
+    </div>
+
+    <script>
+        // Form validation
+        document.querySelector('form').addEventListener('submit', function (e) {
+            var isValid = true;
+            //todo: add validation
+            if (!isValid) {
+                e.preventDefault(); // Prevent form submission if validation fails
+            }
+        });
+    </script>
+</body>
+</html>
