@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `mycvproject`.`language` (
   CONSTRAINT `fk_language_person1`
     FOREIGN KEY (`person_idperson`)
     REFERENCES `mycvproject`.`person` (`idperson`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `mycvproject`.`course` (
   CONSTRAINT `fk_course_person1`
     FOREIGN KEY (`person_idperson`)
     REFERENCES `mycvproject`.`person` (`idperson`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `mycvproject`.`hobby` (
   CONSTRAINT `fk_hobby_person1`
     FOREIGN KEY (`person_idperson`)
     REFERENCES `mycvproject`.`person` (`idperson`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -95,7 +95,7 @@ CREATE TABLE IF NOT EXISTS `mycvproject`.`site` (
   CONSTRAINT `fk_site_person1`
     FOREIGN KEY (`person_idperson`)
     REFERENCES `mycvproject`.`person` (`idperson`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -112,7 +112,7 @@ CREATE TABLE IF NOT EXISTS `mycvproject`.`app` (
   CONSTRAINT `fk_app_person`
     FOREIGN KEY (`person_idperson`)
     REFERENCES `mycvproject`.`person` (`idperson`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -129,7 +129,7 @@ CREATE TABLE IF NOT EXISTS `mycvproject`.`project` (
   CONSTRAINT `fk_project_person1`
     FOREIGN KEY (`person_idperson`)
     REFERENCES `mycvproject`.`person` (`idperson`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 

@@ -39,6 +39,33 @@
                 </tr>
             </tbody>
         </table>
+        <h3>Courses:</h3>
+        <ul>
+            {% for course in courses %}
+            <li>{{ course }}</li>
+            {% endfor %}
+        </ul>
+
+        <h3>Languages:</h3>
+        <ul>
+            {% for language in languages %}
+            <li>{{ language }}</li>
+            {% endfor %}
+        </ul>
+
+        <h3>Hobbies:</h3>
+        <ul>
+            {% for hobby in hobbies %}
+            <li>{{ hobby }}</li>
+            {% endfor %}
+        </ul>
+
+        <h3>Training:</h3>
+        <ul>
+            {% for train in training %}
+            <li>{{ train }}</li>
+            {% endfor %}
+        </ul>
     </div>
 </body>
 </html>

@@ -73,7 +73,7 @@
                         <td>Languages:</td>
                         <td><input class ="form-control" type="text" name="firstL" value="" size="50"/>
                         <input class ="form-control" type="text" name="secondL" value="" size="50"/>
-                        <input class ="form-control" type="text" name="yhirdL" value="" size="50"/>
+                        <input class ="form-control" type="text" name="thirdL" value="" size="50"/>
                         </td>
                     </tr>
                     <tr>
@@ -116,6 +116,11 @@
             </select><br>
             Email: <input class ="form-control" type="text" name="email"><br>
             <input type="submit" value="Update">
+        </form>
+        <form action="/delete_person" method="POST">
+            <h3 class="text-center">Delete a specified person</h3>
+            ID: <input class ="form-control" type="text" name="idperson"><br>
+            <input  type="submit" value="Delte">
         </form>
         <form action="/count_persons_by_country" method="POST">
             <h3 class="text-center">Count Persons by Country</h3>

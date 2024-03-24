@@ -36,6 +36,38 @@ def insert_projects(first_p, second_p, third_p, person_id):
         cursor.execute("INSERT INTO project (projectName, person_idperson) VALUES (%s, %s)", (third_p, person_id))
         connection.commit()
 
+def insert_languages(first_l, second_l, third_l, person_id):
+    if first_l:
+        cursor.execute("INSERT INTO language (languageName, person_idperson) VALUES (%s, %s)", (first_l, person_id))
+        connection.commit()
+    if second_l:
+        cursor.execute("INSERT INTO language (languageName, person_idperson) VALUES (%s, %s)", (second_l, person_id))
+        connection.commit()
+    if third_l:
+        cursor.execute("INSERT INTO language (languageName, person_idperson) VALUES (%s, %s)", (third_l, person_id))
+        connection.commit()
+
+def insert_hobbies(first_h, second_h, third_h, person_id):
+    if first_h:
+        cursor.execute("INSERT INTO hobby (hobbyName, person_idperson) VALUES (%s, %s)", (first_h, person_id))
+        connection.commit()
+    if second_h:
+        cursor.execute("INSERT INTO hobby (hobbyName, person_idperson) VALUES (%s, %s)", (second_h, person_id))
+        connection.commit()
+    if third_h:
+        cursor.execute("INSERT INTO hobby (hobbyName, person_idperson) VALUES (%s, %s)", (third_h, person_id))
+        connection.commit()
+
+def insert_trainings(first_t, second_t, third_t, person_id):
+    if first_t:
+        cursor.execute("INSERT INTO site (siteAddress, person_idperson) VALUES (%s, %s)", (first_t, person_id))
+        connection.commit()
+    if second_t:
+        cursor.execute("INSERT INTO site (siteAddress, person_idperson) VALUES (%s, %s)", (second_t, person_id))
+        connection.commit()
+    if third_t:
+        cursor.execute("INSERT INTO site (siteAddress, person_idperson) VALUES (%s, %s)", (third_t, person_id))
+        connection.commit()
 
 
 
@@ -48,6 +80,11 @@ def read_person_query(first_name):
 def update_person_query(idperson, first, last, city, address, country, email):
     update_person = "UPDATE person SET fName = %s, lName = %s, city = %s, Address = %s, country = %s, email = %s WHERE idperson = %s"
     cursor.execute(update_person, (first, last, city, address, country, email, idperson))
+    connection.commit()
+
+def delete_person_query(idperson):
+    delete_person = "DELETE FROM person WHERE idperson = %s"
+    cursor.execute(delete_person, (idperson,))
     connection.commit()
 
 
@@ -90,6 +127,15 @@ def index():
         first_p = request.form.get('firstP')
         second_p = request.form.get('secondP')
         third_p = request.form.get('thirdP')
+        first_l = request.form.get('firstL')
+        second_l = request.form.get('secondL')
+        third_l = request.form.get('thirdL')
+        first_h = request.form.get('firstH')
+        second_h = request.form.get('secondH')
+        third_h = request.form.get('thirdH')
+        first_t = request.form.get('firstT')
+        second_t = request.form.get('secondT')
+        third_t = request.form.get('thirdT')
 
         insert_person(first_name, last_name, city, address, country, email)
 
@@ -98,6 +144,9 @@ def index():
 
         insert_courses(first_c, second_c, third_c, person_id)
         insert_projects(first_p, second_p, third_p, person_id)
+        insert_hobbies(first_h,second_h,third_h,person_id)
+        insert_languages(first_l,second_l,third_l,person_id)
+        insert_trainings(first_t,second_t,third_t,person_id)
 
         return "Data inserted successfully!"
     else:
@@ -108,9 +157,26 @@ def index():
 @app.route('/read_person', methods=['POST'])
 def read_person():
     first_name = request.form['first_name']
-    # Call  read_person function 
+    # Get person details
     person = read_person_query(first_name)
-    return render_template('person.html', person=person)
+    
+    person_id = person[0]
+    # Get courses for the person
+    cursor.execute("SELECT courseName FROM course WHERE person_idperson = %s", (person_id,))
+    courses = [row[0] for row in cursor.fetchall()]
+
+    # Get languages for the person
+    cursor.execute("SELECT languageName FROM language WHERE person_idperson = %s", (person_id,))
+    languages = [row[0] for row in cursor.fetchall()]
+
+    # Get hobbies for the person
+    cursor.execute("SELECT hobbyName FROM hobby WHERE person_idperson = %s", (person_id,))
+    hobbies = [row[0] for row in cursor.fetchall()]
+
+    # Get training for the person
+    cursor.execute("SELECT siteAddress FROM site WHERE person_idperson = %s", (person_id,))
+    training = [row[0] for row in cursor.fetchall()]
+    return render_template('person.html', person=person, courses=courses, languages=languages, hobbies=hobbies, training=training)
 
 @app.route('/update_person', methods=['POST'])
 def update_person():
@@ -126,7 +192,11 @@ def update_person():
     updatedPerson = read_person_query(first)
     return render_template('person.html', person=updatedPerson,title = "UPDATED")
 
-
+@app.route('/delete_person', methods=['POST'])
+def delete_person():
+    idperson = request.form['idperson']
+    delete_person_query(idperson)
+    return "Person deleted successfully!"
 
 # Flask Code for Aggregation functions
 @app.route('/count_persons_by_country', methods=['POST'])
