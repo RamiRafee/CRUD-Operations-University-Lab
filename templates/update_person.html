@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fetch Table Data</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <form action="/update_person/{{ person[0] }}" method="POST">
+            <h3 class="text-center">Update a specific Person</h3>
+            <input type="hidden" name="idperson" value="{{ person[0] }}">
+            First Name: <input class="form-control" type="text" name="first" value="{{ person[1] }}"><br>
+            Last Name: <input class="form-control" type="text" name="last" value="{{ person[2] }}"><br>
+            City: <input class="form-control" type="text" name="city" value="{{ person[3] }}"><br>
+            Address: <input class="form-control" type="text" name="address" value="{{ person[4] }}"><br>
+            Country Name:
+            <select class="form-control" name="country">
+                <option {% if person[5] == 'Egypt' %} selected {% endif %}>Egypt</option>
+                <option {% if person[5] == 'England' %} selected {% endif %}>England</option>
+                <option {% if person[5] == 'US' %} selected {% endif %}>US</option>
+                <option {% if person[5] == 'Spain' %} selected {% endif %}>Spain</option>
+                <option {% if person[5] == 'Italy' %} selected {% endif %}>Italy</option>
+            </select><br>
+            Email: <input class="form-control" type="text" name="email" value="{{ person[6] }}"><br>
+            <input type="submit" value="Update" class="btn btn-primary">
+        </form>
+    </div>
+</body>
+</html>

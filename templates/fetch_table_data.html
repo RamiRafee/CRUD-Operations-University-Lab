@@ -6,25 +6,44 @@
 </head>
 <body>
     <div class="container">
-        <h1>Data from Table: {{ table_name }}</h1>
+        <h1>All {{table_name}}s</h1>
         <table class="table">
             <thead>
                 <tr>
                     {% for column in columns %}
                     <th>{{ column }}</th>
                     {% endfor %}
+                    <th>Actions</th> <!-- Add Actions column -->
                 </tr>
             </thead>
             <tbody>
-                {% for row in result %}
+                {% for person in result %}
                 <tr>
-                    {% for value in row %}
+                    {% for value in person %}
                     <td>{{ value }}</td>
                     {% endfor %}
+                    <td>
+                        {% if Flag %}
+                        <form action="/update_person/{{ person[0] }}" method="GET"> <!-- Update button -->
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </form>
+                        <form action="/delete_person/{{ person[0] }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this person?')"> <!-- Delete button -->
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                        <form action="/read_person/{{ person[0] }}" method="POST">
+                            
+                            <button type="submit" class="btn btn-primary">Read</button>
+                        </form>
+                        {% endif %}
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
+        <form action="/" method="GET">
+            <input type="submit" class="btn btn-primary" value="Home" name="submit" />
+        </form>
+        
     </div>
 </body>
 </html>

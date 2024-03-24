@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request
+import requests
+from flask import Flask, render_template, request, redirect, url_for
 from db import connect_to_db
 
 app = Flask(__name__)
@@ -148,17 +149,18 @@ def index():
         insert_languages(first_l,second_l,third_l,person_id)
         insert_trainings(first_t,second_t,third_t,person_id)
 
-        return "Data inserted successfully!"
+        response = requests.post(request.url_root + url_for('fetch_table_data'), data={'table_name': 'person'})
+        return response.text
     else:
         return render_template('index.html')
 
 # Flask routes for CRUD operations
 
-@app.route('/read_person', methods=['POST'])
-def read_person():
-    first_name = request.form['first_name']
-    # Get person details
-    person = read_person_query(first_name)
+@app.route('/read_person/<int:idperson>', methods=['POST'])
+def read_person(idperson):
+    select_person = "SELECT * FROM person WHERE idperson = %s"
+    cursor.execute(select_person, (idperson,))
+    person = cursor.fetchone()
     
     person_id = person[0]
     # Get courses for the person
@@ -178,25 +180,36 @@ def read_person():
     training = [row[0] for row in cursor.fetchall()]
     return render_template('person.html', person=person, courses=courses, languages=languages, hobbies=hobbies, training=training)
 
-@app.route('/update_person', methods=['POST'])
-def update_person():
-    idperson = request.form['idperson']
-    first = request.form['first']
-    last = request.form['last']
-    city = request.form['city']
-    address = request.form['address']
-    country = request.form['country']
-    email = request.form['email']
-    # Call  update_person function 
-    update_person_query(idperson, first, last, city, address, country, email)
-    updatedPerson = read_person_query(first)
-    return render_template('person.html', person=updatedPerson,title = "UPDATED")
 
-@app.route('/delete_person', methods=['POST'])
-def delete_person():
-    idperson = request.form['idperson']
+
+
+
+@app.route('/update_person/<int:idperson>', methods=['GET','POST'])
+def update_person(idperson):
+    if request.method =='GET':
+        select_person = "SELECT * FROM person WHERE idperson = %s"
+        cursor.execute(select_person, (idperson,))
+        person = cursor.fetchone()
+        return render_template('update_person.html', person=person)
+    if request.method == 'POST':
+        first = request.form['first']
+        last = request.form['last']
+        city = request.form['city']
+        address = request.form['address']
+        country = request.form['country']
+        email = request.form['email']
+        # Call update_person function
+        update_person_query(idperson, first, last, city, address, country, email)
+        select_person = "SELECT * FROM person WHERE idperson = %s"
+        cursor.execute(select_person, (idperson,))
+        updated_person = cursor.fetchone()
+        return render_template('person.html', person=updated_person, title="UPDATED")
+
+@app.route('/delete_person/<int:idperson>', methods=['POST'])
+def delete_person(idperson):
     delete_person_query(idperson)
-    return "Person deleted successfully!"
+    response = requests.post(request.url_root + url_for('fetch_table_data'), data={'table_name': 'person'})
+    return response.text
 
 # Flask Code for Aggregation functions
 @app.route('/count_persons_by_country', methods=['POST'])
@@ -221,8 +234,11 @@ def count_rows():
 @app.route('/fetch_table_data', methods=['POST'])
 def fetch_table_data():
     table_name = request.form['table_name']
+    persons = False
+    if table_name == 'person':
+        persons= True
     columns,result = select_all_query(table_name)
-    return render_template('fetch_table_data.html', table_name=table_name, result=result, columns=columns)
+    return render_template('fetch_table_data.html', table_name=table_name, result=result, columns=columns,Flag = persons)
 
 
 if __name__ == '__main__':
