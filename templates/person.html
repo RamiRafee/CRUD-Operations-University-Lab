@@ -39,6 +39,7 @@
                 </tr>
             </tbody>
         </table>
+        {% if title != 'UPDATED' %}
         <h3>Courses:</h3>
         <ul>
             {% for course in courses %}
@@ -66,6 +67,11 @@
             <li>{{ train }}</li>
             {% endfor %}
         </ul>
+        {% endif %}
+        <form action="/" method="GET">
+            <input type="submit" class="btn btn-primary" value="Home" name="submit" />
+        </form>
     </div>
+    
 </body>
 </html>
